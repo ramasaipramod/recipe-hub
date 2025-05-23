@@ -1,0 +1,159 @@
+{% extends 'recipe_hub_frontend/base.html' %}
+
+{% block title %}Recipe Hub - Browse Recipes{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="header">
+        <h1>Recipe Hub</h1>
+    </div>
+    
+    <!-- Filters Section -->
+    <div class="filters">
+        <div class="filter-grid">
+            <div class="filter-group title-filter">
+                <input type="text" id="title-filter" placeholder="Search recipe..">
+            </div>    
+            <div class="filter-group cuisine-filter">
+                <select id="cuisine-filter">
+                    <option value="">Select Cuisine</option>
+                </select>
+            </div>
+            <div class="filter-group calories-filter">
+                <label for="calories-filter">&nbsp;Calories (kcal)</label>
+                <div class="values-range">
+                    <input type="text" id="calories-min" placeholder="Min">
+                    <input type="text" id="calories-max" placeholder="Max">
+                </div>
+            </div>
+            <div class="filter-group rating-filter">
+                <label for="rating-filter">&nbsp;Rating</label>
+                <select id="rating-filter">
+                    <option value="">Any Rating</option>
+                    <option value=">=4.5">★★★★★ 4.5+ Excellent</option>
+                    <option value=">=4.0">★★★★☆ 4.0+ Very Good</option>
+                    <option value=">=3.5">★★★☆☆ 3.5+ Good</option>
+                    <option value=">=3.0">★★★☆☆ 3.0+ Average</option>
+                    <option value=">=2.0">★★☆☆☆ 2.0+ Fair</option>
+                    <option value=">=1.0">★☆☆☆☆ 1.0+ Any Rating</option>
+                </select>
+            </div>
+            <div class="filter-group time-filter">
+                <label for="time-filter">&nbsp;Total Time (mins)</label>
+                <div class="values-range">
+                    <input type="text" id="time-min" placeholder="Min">
+                    <input type="text" id="time-max" placeholder="Max">
+                </div>
+            </div>
+        </div>
+        <div class="filter-actions">
+            <button class="btn btn-secondary" onclick="clearFilters()">Clear All</button>
+            <button class="btn btn-primary" onclick="applyFilters()">Search</button>
+        </div>
+    </div>
+    
+    <!-- Results Section -->
+    <div class="results-section" id="results-section">
+        <div class="results-header">
+            <div class="results-info" id="results-info">
+                Loading recipes...
+            </div>
+            <div class="page-size-selector">
+                <label for="page-size">Results per page:</label>
+                <select id="page-size" onchange="changePageSize()">
+                    <option value="15" selected>15</option>
+                    <option value="25">25</option>
+                    <option value="35">35</option>
+                    <option value="50">50</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table id="recipes-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Cuisine</th>
+                        <th>Rating</th>
+                        <th>Total Time</th>
+                        <th>Serves</th>
+                    </tr>
+                </thead>
+                <tbody id="recipes-tbody">
+                    <!-- Data will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="pagination" id="pagination">
+            <!-- Pagination will be populated by JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Empty State (No Results Found) -->
+    <div class="empty-state" id="empty-state">
+        <div class="empty-state-content">
+            <i class="fas fa-utensils empty-state-icon" aria-hidden="true"></i>
+            <h3>No Recipes Found</h3>
+            <p class="empty-state-message">
+                Sorry, we couldn't find any recipes matching your filters.
+            </p>
+        </div>
+    </div>
+
+    <!-- Error State (Data Loading Failed) -->
+    <div class="error-state" id="error-state" style="display: none;">
+        <div class="error-state-content">
+            <i class="fas fa-exclamation-triangle error-state-icon"></i>
+            <h3>Oops! Something went wrong</h3>
+            <p class="error-state-message">We're having trouble loading the recipes right now.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Recipe Detail Drawer -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()">
+    <div class="drawer" id="recipe-drawer" onclick="event.stopPropagation()">
+        <div class="drawer-header">
+            <button class="drawer-close" onclick="closeDrawer()">×</button>
+            <h2 id="drawer-title">Recipe Title</h2>
+            <div class="cuisine" id="drawer-cuisine">Cuisine</div>
+        </div>
+        
+        <div class="drawer-content">
+            <div class="info-item">
+                <label>Description:</label>
+                <div class="value" id="drawer-description">Loading...</div>
+            </div>
+            
+            <div class="info-item">
+                <label class="expandable" onclick="toggleTimeDetails()">
+                    <i class="fas fa-chevron-right"></i>
+                    Total Time: <span id="drawer-total-time">-</span>
+                </label>
+                <div class="time-details" id="time-details">
+                    <div><strong>Cook Time:</strong> <span id="drawer-cook-time">-</span></div>
+                    <div><strong>Prep Time:</strong> <span id="drawer-prep-time">-</span></div>
+                </div>
+            </div>
+            
+            <div class="nutrition-section">
+                <h3>Nutrition Information</h3>
+                <table class="nutrition-table">
+                    <thead>
+                        <tr>
+                            <th>Nutrient</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="nutrition-tbody">
+                        <!-- Nutrition data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

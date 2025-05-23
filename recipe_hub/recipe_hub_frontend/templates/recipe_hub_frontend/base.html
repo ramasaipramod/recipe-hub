@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Recipe Hub{% endblock %}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'recipe_hub_frontend/css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+    <!-- jQuery and any other required libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Choices.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+    <!-- Choices.js JS -->
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+
+    <!-- <script src="{% static 'recipe_hub_frontend/js/recipes.js' %}"></script> -->
+    <script src="{% static 'recipe_hub_frontend/js/config.js' %}"></script>
+    <script src="{% static 'recipe_hub_frontend/js/state.js' %}"></script>
+    <script src="{% static 'recipe_hub_frontend/js/api.js' %}"></script>
+    <script src="{% static 'recipe_hub_frontend/js/ui.js' %}"></script>
+    <script src="{% static 'recipe_hub_frontend/js/pagination.js' %}"></script>
+    <script src="{% static 'recipe_hub_frontend/js/filters.js' %}"></script>
+    <script src="{% static 'recipe_hub_frontend/js/drawer.js' %}"></script>
+    <script src="{% static 'recipe_hub_frontend/js/main.js' %}"></script>
+    
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
