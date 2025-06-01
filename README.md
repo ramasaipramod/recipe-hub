@@ -37,7 +37,7 @@ recipe_hub/
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/ramasaipramod/recipe-hub
 cd recipe_hub
 ```
 
